@@ -31,14 +31,14 @@ namespace PaymentGateway.Domain.PaymentProcessing
 
             try
             {
-                paymentRecord = await _paymentRepository.Upsert(paymentRecord);
+                await _paymentRepository.Upsert(paymentRecord);
 
                 var bankResponse = await _bankHandler.Handle(paymentProcessingRequest);
 
                 paymentRecord.BankTransactionId = bankResponse.TransactionId;
                 paymentRecord.PaymentStatus = bankResponse.Success ? PaymentStatus.Success : PaymentStatus.Failed;
                 
-                paymentRecord = await _paymentRepository.Upsert(paymentRecord);
+                await _paymentRepository.Upsert(paymentRecord);
             }
             catch (BankingException bankingException)
             {

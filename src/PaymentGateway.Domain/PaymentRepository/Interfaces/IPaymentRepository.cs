@@ -8,6 +8,6 @@ namespace PaymentGateway.Domain.PaymentRepository.Interfaces
     {
         Task<PaymentRecord> Get(Guid id);
 
-        Task<PaymentRecord> Upsert(PaymentRecord paymentRecord);
+        Task Upsert(PaymentRecord paymentRecord);
     }
 }

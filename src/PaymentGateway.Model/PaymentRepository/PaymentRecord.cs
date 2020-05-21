@@ -15,6 +15,11 @@ namespace PaymentGateway.Model.PaymentRepository
 
         public static PaymentRecord Convert(PaymentProcessingRequest paymentProcessingRequest)
         {
+            if (paymentProcessingRequest == null)
+            {
+                throw new ArgumentException("PaymentProcessingRequest cannot be null.");
+            }
+
             return new PaymentRecord
             {
                 CardNumber = paymentProcessingRequest.CardNumber,

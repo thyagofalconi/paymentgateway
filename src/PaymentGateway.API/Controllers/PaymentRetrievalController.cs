@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PaymentGateway.API.Authentication;
 using PaymentGateway.Domain.PaymentRepository.Interfaces;
 using PaymentGateway.Model.PaymentRepository;
+using PaymentGateway.Model.PaymentRetrieval;
 using System;
 using System.Threading.Tasks;
 
@@ -23,7 +25,7 @@ namespace PaymentGateway.API.Controllers
 
         [HttpGet]
         [Route("v1")]
-        //[Authorize(Roles = "payment-retrieval")]
+        [BasicAuth("payment-retrieval")]
         public async Task<IActionResult> Get(string id)
         {
             if (!ModelState.IsValid)
@@ -44,18 +46,18 @@ namespace PaymentGateway.API.Controllers
             }
             catch (PaymentRepositoryException paymentRepositoryException)
             {
-                return BadRequest(new
+                return BadRequest(new PaymentRetrievalFailedResponse
                 {
                     Success = false,
-                    Message = new[] { $"An error has occurred when getting the payment record. Details: {paymentRepositoryException.Message}" }
+                    Message = $"An error has occurred when getting the payment record. Details: {paymentRepositoryException.Message}"
                 });
             }
             catch (Exception exception)
             {
-                return BadRequest(new
+                return BadRequest(new PaymentRetrievalFailedResponse
                 {
                     Success = false,
-                    Message = new[] { $"An unhandled error has occurred. Details: {exception.Message}" }
+                    Message = $"An unhandled error has occurred. Details: {exception.Message}"
                 });
             }
         }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PaymentGateway.API.Authentication;
 using PaymentGateway.Domain.PaymentProcessing.Interfaces;
 using PaymentGateway.Model.PaymentProcessing;
 using System;
@@ -24,7 +24,7 @@ namespace PaymentGateway.API.Controllers
 
         [HttpPost]
         [Route("v1")]
-        //[Authorize(Roles = "payment-processing")]
+        [BasicAuth("payment-processing")]
         public async Task<IActionResult> Post([FromBody] PaymentProcessingRequest request)
         {
             if (!ModelState.IsValid)
@@ -40,18 +40,18 @@ namespace PaymentGateway.API.Controllers
             }
             catch (PaymentProcessingException exception)
             {
-                return BadRequest(new
+                return BadRequest(new PaymentProcessingFailedResponse
                 {
                     Success = false,
-                    Message = new[] {$"An error has occurred. Details: {exception.Message}"}
+                    Message = $"An error has occurred. Details: {exception.Message}"
                 });
             }
             catch (Exception exception)
             {
-                return BadRequest(new
+                return BadRequest(new PaymentProcessingFailedResponse
                 {
                     Success = false,
-                    Message = new[] { $"An unhandled error has occurred. Details: {exception.Message}" }
+                    Message = $"An unhandled error has occurred. Details: {exception.Message}"
                 });
             }
         }
