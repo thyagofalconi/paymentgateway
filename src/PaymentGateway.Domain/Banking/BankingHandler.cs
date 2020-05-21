@@ -1,4 +1,5 @@
-﻿using PaymentGateway.Domain.Banking.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using PaymentGateway.Domain.Banking.Interfaces;
 using PaymentGateway.Model.Banking;
 using PaymentGateway.Model.PaymentProcessing;
 using System;
@@ -8,13 +9,28 @@ namespace PaymentGateway.Domain.Banking
 {
     public class BankingHandler : IBankingHandler
     {
-        public Task<BankingResponse> Handle(PaymentProcessingRequest paymentProcessingRequest)
+        private readonly ILogger<BankingHandler> _logger;
+
+        private readonly IAcquirerBankingService _acquirerBankingService;
+
+        public BankingHandler(ILogger<BankingHandler> logger, IAcquirerBankingService acquirerBankingService)
         {
-            return Task.FromResult(new BankingResponse
+            _logger = logger;
+            _acquirerBankingService = acquirerBankingService;
+        }
+
+        public async Task<BankingResponse> Handle(PaymentProcessingRequest paymentProcessingRequest)
+        {
+            try
             {
-                TransactionId = Guid.NewGuid(),
-                TransactionStatus = TransactionStatus.Success
-            });
+                var response = await _acquirerBankingService.Post(paymentProcessingRequest);
+
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new BankingException(exception.Message);
+            }
         }
     }
 }

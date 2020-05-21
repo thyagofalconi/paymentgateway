@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.Model.Banking
+﻿namespace AcquiringBank.API.Fake.Models
 {
     public enum TransactionStatus
     {

@@ -1,21 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PaymentGateway.Data.Context;
-using PaymentGateway.Domain.Banking;
-using PaymentGateway.Domain.Banking.Interfaces;
-using PaymentGateway.Domain.PaymentProcessing;
-using PaymentGateway.Domain.PaymentProcessing.Interfaces;
-using PaymentGateway.Domain.PaymentRepository;
-using PaymentGateway.Domain.PaymentRepository.Interfaces;
-using Refit;
 
-namespace PaymentGateway.API
+namespace AcquiringBank.API.Fake
 {
     public class Startup
     {
@@ -35,14 +32,6 @@ namespace PaymentGateway.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Payment Gateway", Version = "v1" });
             });
-
-            services.AddDbContext<PaymentContext>(options => options.UseInMemoryDatabase(databaseName: "ContextDatabase"));
-
-            services.AddScoped<IBankingHandler, BankingHandler>();
-            services.AddScoped<IPaymentRepository, PaymentRepository>();
-            services.AddScoped<IPaymentHandler, PaymentHandler>();
-
-            services.AddRefitClient<IAcquirerBankingService>().ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("Apis:AcquiringBankApi:Url").Value));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

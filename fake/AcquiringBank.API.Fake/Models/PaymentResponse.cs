@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PaymentGateway.Model.Banking
+namespace AcquiringBank.API.Fake.Models
 {
-    public class BankingResponse
+    public class PaymentResponse
     {
         public Guid TransactionId { get; set; }
 

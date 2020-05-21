@@ -35,22 +35,9 @@ namespace PaymentGateway.Domain.PaymentProcessing
 
                 var bankResponse = await _bankHandler.Handle(paymentProcessingRequest);
 
-                if (bankResponse.TransactionStatus == TransactionStatus.Success)
-                {
-                    paymentRecord.BankTransactionId = bankResponse.TransactionId;
-
-                    switch (bankResponse.TransactionStatus)
-                    {
-                        case TransactionStatus.Success:
-                            paymentRecord.PaymentStatus = PaymentStatus.Success;
-                            break;
-
-                        default:
-                            paymentRecord.PaymentStatus = PaymentStatus.Failed;
-                            break;
-                    }
-                }
-
+                paymentRecord.BankTransactionId = bankResponse.TransactionId;
+                paymentRecord.PaymentStatus = bankResponse.Success ? PaymentStatus.Success : PaymentStatus.Failed;
+                
                 paymentRecord = await _paymentRepository.Upsert(paymentRecord);
             }
             catch (BankingException bankingException)
