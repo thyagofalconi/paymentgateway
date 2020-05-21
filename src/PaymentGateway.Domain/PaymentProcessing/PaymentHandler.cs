@@ -1,15 +1,14 @@
-﻿using PaymentGateway.Domain.PaymentProcessing.Handler.Interfaces;
-using PaymentGateway.Domain.PaymentProcessing.Models;
+﻿using Microsoft.Extensions.Logging;
+using PaymentGateway.Domain.Banking.Interfaces;
+using PaymentGateway.Domain.PaymentProcessing.Interfaces;
+using PaymentGateway.Domain.PaymentRepository.Interfaces;
+using PaymentGateway.Model.Banking;
+using PaymentGateway.Model.PaymentProcessing;
+using PaymentGateway.Model.PaymentRepository;
 using System;
-using System.Data;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using PaymentGateway.Domain.Banking.Handler.Interfaces;
-using PaymentGateway.Domain.Banking.Models;
-using PaymentGateway.Domain.PaymentRepository.Handler.Interfaces;
-using PaymentGateway.Domain.PaymentRepository.Models;
 
-namespace PaymentGateway.Domain.PaymentProcessing.Handler
+namespace PaymentGateway.Domain.PaymentProcessing
 {
     public class PaymentHandler : IPaymentHandler
     {
@@ -33,18 +32,7 @@ namespace PaymentGateway.Domain.PaymentProcessing.Handler
             try
             {
                 paymentRecord = await _paymentRepository.Upsert(paymentRecord);
-            }
-            catch (PaymentRepositoryException paymentRepositoryException)
-            {
-                throw;
-            }
-            catch (Exception exception)
-            {
-                throw;
-            }
 
-            try
-            {
                 var bankResponse = await _bankHandler.Handle(paymentProcessingRequest);
 
                 if (bankResponse.TransactionStatus == TransactionStatus.Success)
@@ -63,30 +51,21 @@ namespace PaymentGateway.Domain.PaymentProcessing.Handler
                     }
                 }
 
-                
+                paymentRecord = await _paymentRepository.Upsert(paymentRecord);
             }
             catch (BankingException bankingException)
             {
-                throw;
-            }
-            catch (Exception exception)
-            {
-                throw;
-            }
-            
-            try
-            {
-                paymentRecord = await _paymentRepository.Upsert(paymentRecord);
+                throw new PaymentProcessingException($"There was an issue when processing the transaction with the bank. Details: {bankingException.Message}");
             }
             catch (PaymentRepositoryException paymentRepositoryException)
             {
-                throw;
+                throw new PaymentProcessingException($"There was an issue when saving the request. Details: {paymentRepositoryException.Message}");
             }
             catch (Exception exception)
             {
-                throw;
+                throw new PaymentProcessingException($"An unhandled error has occurred. Details: {exception.Message}");
             }
-            
+
             var response = new PaymentProcessingResponse
             {
                 PaymentGatewayId = paymentRecord.PaymentGatewayId,

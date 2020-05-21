@@ -1,10 +1,12 @@
-﻿using PaymentGateway.Domain.PaymentProcessing.Models;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using PaymentGateway.Model.PaymentProcessing;
 
-namespace PaymentGateway.Domain.PaymentRepository.Models
+namespace PaymentGateway.Model.PaymentRepository
 {
     public class PaymentRecord : PaymentProcessingRequest
     {
+        [Key]
         public Guid PaymentGatewayId { get; set; }
 
         public Guid BankTransactionId { get; set; }

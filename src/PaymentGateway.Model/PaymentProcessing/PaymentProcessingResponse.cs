@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaymentGateway.Domain.PaymentProcessing.Models
+namespace PaymentGateway.Model.PaymentProcessing
 {
     public class PaymentProcessingResponse
     {

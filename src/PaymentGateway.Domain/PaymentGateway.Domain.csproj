@@ -9,4 +9,15 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Banking\Handler\" />
+    <Folder Include="PaymentProcessing\Handler\" />
+    <Folder Include="PaymentRepository\Handler\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaymentGateway.Data\PaymentGateway.Data.csproj" />
+    <ProjectReference Include="..\PaymentGateway.Model\PaymentGateway.Model.csproj" />
+  </ItemGroup>
+
 </Project>

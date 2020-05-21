@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaymentGateway.Domain.PaymentRepository.Models
+namespace PaymentGateway.Model.PaymentRepository
 {
     public class PaymentRepositoryException : Exception
     {
