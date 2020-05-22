@@ -21,6 +21,6 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Build the Docker image
-      run: docker image build src\PaymentGateway.API\ --tag paymentgateway:$(date +%s)
+      run: docker build src\PaymentGateway.API\ --tag paymentgateway:$(date +%s)
     - name: Test
       run: dotnet test --no-restore --verbosity normal
