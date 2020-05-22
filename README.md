@@ -100,10 +100,3 @@ CI script was built using Github Actions and are available here: https://github.
 * Add docker build and publish workflow in Github
 * Once API is deployed in AWS, start using Grafana for application metrics
 * Reduce build time
-
-
-
-* 
-
-todo
-
