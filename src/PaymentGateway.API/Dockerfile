@@ -4,6 +4,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+COPY ["src/PaymentGateway.API/PaymentGateway.API.csproj", "src/PaymentGateway.API/"]
 COPY *.csproj ./
 RUN dotnet restore
 RUN dotnet build -c Release
