@@ -1,16 +1,16 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
+FROM microsoft/aspnetcore-build AS build-env
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-COPY *.csproj ./
-RUN dotnet restore
-
+# copy the contents of agent working directory on host to workdir in container
 COPY . ./
+
+# dotnet commands to build, test, and publish
+RUN dotnet restore
+RUN dotnet build -c Release
 RUN dotnet publish -c Release -o out
 
-FROM base AS final
+# Second stage - Build runtime image
+FROM microsoft/aspnetcore
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build-env /app/publish .
 ENTRYPOINT ["dotnet", "PaymentGateway.API.dll"]
