@@ -95,7 +95,7 @@ CI script was built using Github Actions and are available here: https://github.
 * Improve credit card data encryption, at the moment a RSA encryption is encrypting the credit card long number, but it would have to be something like: https://stackoverflow.com/questions/22047107/is-it-safe-to-have-a-credit-card-model
 * To run the integration tests you will need to give permission in the firewall (a window will prompt if you try to run it without this exception). This is happening because the test runs two apis and it's hosting one of them in a different port. So it would be nice to use Kestrel without having to add this firewall exception
 * Add more integration tests
-* Implement more comple authentication (at the moment there's basic auth), for example, OAuth2 with https://auth0.com/
+* Implement more complex authentication (at the moment there's basic auth), for example, OAuth2 with https://auth0.com/
 * Store keys as secrets in Github
 * Add docker build and publish workflow in Github
 * Once API is deployed in AWS, start using Grafana for application metrics
