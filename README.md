@@ -58,7 +58,7 @@ curl -X GET "https://localhost:44386/api/PaymentRetrieval/v1?id=52a9c1f9-0b80-42
 
 ## Data Storage
 
-A In-memory database and EntityFrameworkCore was used a data storage, which means that once the application is deployed or restarted any existing data would be erased.
+A In-memory database and EntityFrameworkCore was used as data storage, which means that once the application is deployed or restarted any existing data would be erased.
 
 ## Logging Dashboard
 
