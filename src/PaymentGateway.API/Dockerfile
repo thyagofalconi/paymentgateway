@@ -11,7 +11,7 @@ WORKDIR /src
 #COPY ["src/PaymentGateway.Domain/PaymentGateway.Domain.csproj", "src/PaymentGateway.Domain/"]
 #COPY ["src/PaymentGateway.Model/PaymentGateway.Model.csproj", "src/PaymentGateway.Model/"]
 #COPY ["src/PaymentGateway.Data/PaymentGateway.Data.csproj", "src/PaymentGateway.Data/"]
-RUN dotnet restore "./src/PaymentGateway.API/PaymentGateway.API.csproj"
+RUN dotnet restore "/src/PaymentGateway.API/PaymentGateway.API.csproj"
 COPY . .
 WORKDIR "/src/src/PaymentGateway.API"
 RUN dotnet build "PaymentGateway.API.csproj" -c Release -o /app/build
