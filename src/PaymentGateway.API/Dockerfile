@@ -4,7 +4,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /src
+
 COPY ["*PaymentGateway.API.csproj", "src/PaymentGateway.API/"]
 COPY ["*PaymentGateway.Domain.csproj", "src/PaymentGateway.Domain/"]
 COPY ["*PaymentGateway.Model.csproj", "src/PaymentGateway.Model/"]
