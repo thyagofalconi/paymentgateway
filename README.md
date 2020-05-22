@@ -66,7 +66,7 @@ Logs are being sent to Elmah.io and there's a dashboard available. Credentials a
 
 ## CI
 
-CI script were built using Github Actions and are available here: https://github.com/thyagofalconi/paymentgateway/blob/master/.github/workflows/paymentgateway.yml
+CI script was built using Github Actions and are available here: https://github.com/thyagofalconi/paymentgateway/blob/master/.github/workflows/paymentgateway.yml
 
 ## Built With
 
