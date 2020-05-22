@@ -4,11 +4,19 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /src
 COPY ["*PaymentGateway.API.csproj", "src/PaymentGateway.API/"]
-COPY *.csproj ./
-RUN dotnet restore
-RUN dotnet build -c Release
-RUN dotnet publish -c Release -o out
+COPY ["*PaymentGateway.Domain.csproj", "src/PaymentGateway.Domain/"]
+COPY ["*PaymentGateway.Model.csproj", "src/PaymentGateway.Model/"]
+COPY ["*PaymentGateway.Data.csproj", "src/PaymentGateway.Data/"]
+
+RUN dotnet restore "src/PaymentGateway.API/PaymentGateway.API.csproj"
+COPY . .
+WORKDIR "/src/src/PaymentGateway.API"
+RUN dotnet build "PaymentGateway.API.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "PaymentGateway.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
