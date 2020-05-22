@@ -20,8 +20,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker image build src/PaymentGateway.API/DockerFile --tag paymentgateway:$(date +%s)
+      run: docker image build src\PaymentGateway.API\DockerFile --tag paymentgateway:$(date +%s)
     - name: Test
       run: dotnet test --no-restore --verbosity normal
