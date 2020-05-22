@@ -16,8 +16,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Build the Docker image
-      run: docker build src\PaymentGateway.API\ --tag paymentgateway:$(date +%s)
     - name: Install dependencies
       run: dotnet restore
     - name: Build
