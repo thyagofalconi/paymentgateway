@@ -42,14 +42,20 @@ namespace PaymentGateway.Domain.PaymentProcessing
             }
             catch (BankingException bankingException)
             {
+                _logger.LogError(bankingException.ToString());
+
                 throw new PaymentProcessingException($"There was an issue when processing the transaction with the bank. Details: {bankingException.Message}");
             }
             catch (PaymentRepositoryException paymentRepositoryException)
             {
+                _logger.LogError(paymentRepositoryException.ToString());
+
                 throw new PaymentProcessingException($"There was an issue when saving the request. Details: {paymentRepositoryException.Message}");
             }
             catch (Exception exception)
             {
+                _logger.LogError(exception.ToString());
+
                 throw new PaymentProcessingException($"An unhandled error has occurred. Details: {exception.Message}");
             }
 

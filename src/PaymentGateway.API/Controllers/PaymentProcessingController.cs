@@ -40,6 +40,8 @@ namespace PaymentGateway.API.Controllers
             }
             catch (PaymentProcessingException exception)
             {
+                _logger.LogError(exception.ToString());
+
                 return BadRequest(new PaymentProcessingFailedResponse
                 {
                     Success = false,
@@ -48,6 +50,8 @@ namespace PaymentGateway.API.Controllers
             }
             catch (Exception exception)
             {
+                _logger.LogError(exception.ToString());
+
                 return BadRequest(new PaymentProcessingFailedResponse
                 {
                     Success = false,

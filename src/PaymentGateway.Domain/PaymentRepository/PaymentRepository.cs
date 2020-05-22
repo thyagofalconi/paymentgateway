@@ -5,6 +5,7 @@ using PaymentGateway.Domain.PaymentRepository.Interfaces;
 using PaymentGateway.Model.PaymentRepository;
 using System;
 using System.Threading.Tasks;
+using PaymentGateway.Domain.DataEncryption.Interfaces;
 
 namespace PaymentGateway.Domain.PaymentRepository
 {
@@ -14,10 +15,13 @@ namespace PaymentGateway.Domain.PaymentRepository
 
         private readonly PaymentContext _context;
 
-        public PaymentRepository(ILogger<PaymentRepository> logger, PaymentContext context)
+        private readonly IDataEncryptor _dataEncryptor;
+
+        public PaymentRepository(ILogger<PaymentRepository> logger, PaymentContext context, IDataEncryptor dataEncryptor)
         {
             _logger = logger;
             _context = context;
+            _dataEncryptor = dataEncryptor;
         }
 
         public async Task<PaymentRecord> Get(Guid id)
@@ -30,6 +34,8 @@ namespace PaymentGateway.Domain.PaymentRepository
             }
             catch (Exception exception)
             {
+                _logger.LogError(exception.ToString());
+
                 throw new PaymentRepositoryException(exception.Message);
             }
         }
@@ -40,6 +46,8 @@ namespace PaymentGateway.Domain.PaymentRepository
             {
                 if (paymentRecord.PaymentStatus == PaymentStatus.Pending)
                 {
+                    paymentRecord.CardNumber = _dataEncryptor.Encrypt(paymentRecord.CardNumber);
+
                     _context.Payments.Add(paymentRecord);
                 }
                 else
@@ -51,6 +59,8 @@ namespace PaymentGateway.Domain.PaymentRepository
             }
             catch (Exception exception)
             {
+                _logger.LogError(exception.ToString());
+
                 throw new PaymentRepositoryException(exception.Message);
             }
         }

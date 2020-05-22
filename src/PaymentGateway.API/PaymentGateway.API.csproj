@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Elmah.Io.AspNetCore.ExtensionsLogging" Version="3.6.62" />
+    <PackageReference Include="Elmah.Io.Extensions.Logging" Version="3.6.62" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Refit" Version="5.1.67" />

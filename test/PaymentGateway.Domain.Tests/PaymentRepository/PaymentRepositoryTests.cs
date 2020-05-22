@@ -6,6 +6,7 @@ using NUnit.Framework;
 using PaymentGateway.Data.Context;
 using PaymentGateway.Model.PaymentRepository;
 using System;
+using PaymentGateway.Domain.DataEncryption.Interfaces;
 
 namespace PaymentGateway.Domain.Tests.PaymentRepository
 {
@@ -26,8 +27,9 @@ namespace PaymentGateway.Domain.Tests.PaymentRepository
                     .Options);
             
             var mockedLogger = Substitute.For<ILogger<Domain.PaymentRepository.PaymentRepository>>();
+            var mockedDataEncryptor = Substitute.For<IDataEncryptor>();
 
-            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext);
+            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext, mockedDataEncryptor);
 
             var expectedId = Guid.NewGuid();
 
@@ -57,8 +59,9 @@ namespace PaymentGateway.Domain.Tests.PaymentRepository
                 .Options);
 
             var mockedLogger = Substitute.For<ILogger<Domain.PaymentRepository.PaymentRepository>>();
+            var mockedDataEncryptor = Substitute.For<IDataEncryptor>();
 
-            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext);
+            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext, mockedDataEncryptor);
 
             var randomId = Guid.NewGuid();
             
@@ -81,8 +84,9 @@ namespace PaymentGateway.Domain.Tests.PaymentRepository
                 .Options);
 
             var mockedLogger = Substitute.For<ILogger<Domain.PaymentRepository.PaymentRepository>>();
+            var mockedDataEncryptor = Substitute.For<IDataEncryptor>();
 
-            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext);
+            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext, mockedDataEncryptor);
 
             var expectedId = Guid.NewGuid();
             var expectedPaymentRecord = new PaymentRecord
@@ -114,8 +118,9 @@ namespace PaymentGateway.Domain.Tests.PaymentRepository
                 .Options);
 
             var mockedLogger = Substitute.For<ILogger<Domain.PaymentRepository.PaymentRepository>>();
+            var mockedDataEncryptor = Substitute.For<IDataEncryptor>();
 
-            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext);
+            var realPaymentRepository = new Domain.PaymentRepository.PaymentRepository(mockedLogger, localTestContext, mockedDataEncryptor);
 
             var expectedId = Guid.NewGuid();
             var expectedPaymentRecord = new PaymentRecord

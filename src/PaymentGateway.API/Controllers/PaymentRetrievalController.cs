@@ -46,6 +46,8 @@ namespace PaymentGateway.API.Controllers
             }
             catch (PaymentRepositoryException paymentRepositoryException)
             {
+                _logger.LogError(paymentRepositoryException.ToString());
+
                 return BadRequest(new PaymentRetrievalFailedResponse
                 {
                     Success = false,
@@ -54,6 +56,8 @@ namespace PaymentGateway.API.Controllers
             }
             catch (Exception exception)
             {
+                _logger.LogError(exception.ToString());
+
                 return BadRequest(new PaymentRetrievalFailedResponse
                 {
                     Success = false,

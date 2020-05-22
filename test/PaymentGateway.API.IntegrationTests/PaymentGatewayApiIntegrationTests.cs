@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 
@@ -30,7 +29,7 @@ namespace PaymentGateway.API.IntegrationTests
                     webHost
                     .UseStartup(typeof(AcquiringBank.API.Fake.Startup))
                     .UseTestServer()
-                    .UseKestrel(options => options.Listen(IPAddress.Any, 81)))
+                    .UseKestrel(options => options.Listen(IPAddress.Any, 51394)))
                 .Start();
             
             const string cardNumber = "1234567812345678";

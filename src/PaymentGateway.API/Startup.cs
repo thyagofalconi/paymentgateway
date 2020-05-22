@@ -9,6 +9,8 @@ using Microsoft.OpenApi.Models;
 using PaymentGateway.Data.Context;
 using PaymentGateway.Domain.Banking;
 using PaymentGateway.Domain.Banking.Interfaces;
+using PaymentGateway.Domain.DataEncryption;
+using PaymentGateway.Domain.DataEncryption.Interfaces;
 using PaymentGateway.Domain.PaymentProcessing;
 using PaymentGateway.Domain.PaymentProcessing.Interfaces;
 using PaymentGateway.Domain.PaymentRepository;
@@ -41,6 +43,9 @@ namespace PaymentGateway.API
             services.AddScoped<IBankingHandler, BankingHandler>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentHandler, PaymentHandler>();
+            services.AddSingleton<IDataEncryptor>(x =>
+                new DataEncryptor(Configuration.GetSection("Encryption:PublicKey").Value,
+                    Configuration.GetSection("Encryption:PrivateKey").Value));
 
             services.AddRefitClient<IAcquirerBankingService>().ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("Apis:AcquiringBankApi:Url").Value));
         }
@@ -52,6 +57,8 @@ namespace PaymentGateway.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseElmahIoExtensionsLogging();
 
             app.UseSwagger();
 
