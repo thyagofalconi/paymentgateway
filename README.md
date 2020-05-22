@@ -1,6 +1,6 @@
 # Payment Gateway
 
-todo
+API responsible for validating requests, storing card information and forwarding payment requests and accepting payment responses to and from the acquiring bank.
 
 ### Prerequisites
 
@@ -22,10 +22,6 @@ todo
 ### Built With
 
 todo
-
-### Authors
-
-* **Thyago Falconi**
 
 ### TODO
 
