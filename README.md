@@ -62,7 +62,7 @@ A In-memory database and EntityFrameworkCore was used as data storage, which mea
 
 ## Logging Dashboard
 
-Logs are being sent to Elmah.io and there's a dashboard available. Credentials and URL are available via email.
+Logs are being sent to elmah.io and there's a dashboard available. Credentials and URL are available via email.
 
 ## CI
 
@@ -72,7 +72,7 @@ CI script was built using Github Actions and are available here: https://github.
 
 * .NET Core SDK 3.1: https://dotnet.microsoft.com/download/dotnet-core/3.1
 * Swagger: https://swagger.io/
-* Elmah.Io: https://elmah.io/
+* elmah.io: https://elmah.io/
 * EntiyFrameworkCore: https://docs.microsoft.com/en-us/ef/core/
 * Refit: https://github.com/reactiveui/refit
 * FluentAssertions: https://fluentassertions.com/
